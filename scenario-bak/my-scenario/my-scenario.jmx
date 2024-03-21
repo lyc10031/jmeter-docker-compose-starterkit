@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="测试计划">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments"/>
       </elementProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments">
           <elementProp name="host" elementType="Argument">
             <stringProp name="Argument.name">host</stringProp>
@@ -42,35 +44,20 @@
             <stringProp name="Argument.value">${__P(rampup,1)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="name" elementType="Argument">
-            <stringProp name="Argument.name">name</stringProp>
-            <stringProp name="Argument.value">${__P(name,defaultname)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="num" elementType="Argument">
-            <stringProp name="Argument.name">num</stringProp>
-            <stringProp name="Argument.value">${__P(num,1919)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP 信息头管理器">
-        <collectionProp name="HeaderManager.headers">
-          <elementProp name="" elementType="Header">
-            <stringProp name="Header.name">User-Agent</stringProp>
-            <stringProp name="Header.value">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0</stringProp>
-          </elementProp>
-        </collectionProp>
+      <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+        <collectionProp name="HeaderManager.headers"/>
       </HeaderManager>
       <hashTree/>
-      <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP cookie 管理器">
+      <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager">
         <collectionProp name="CookieManager.cookies"/>
         <boolProp name="CookieManager.clearEachIteration">false</boolProp>
         <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
       </CookieManager>
       <hashTree/>
-      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP 请求默认值">
+      <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults">
         <stringProp name="HTTPSampler.domain">${host}</stringProp>
         <stringProp name="HTTPSampler.port">${port}</stringProp>
         <stringProp name="HTTPSampler.protocol">${protocol}</stringProp>
@@ -81,7 +68,7 @@
         <stringProp name="HTTPSampler.implementation"></stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="线程组">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
         <stringProp name="ThreadGroup.num_threads">${threads}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${rampup}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -94,42 +81,27 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP 请求">
-          <stringProp name="HTTPSampler.path">/cal</stringProp>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="R-HTTP_SAMPLE_REQUEST">
+          <stringProp name="HTTPSampler.path">/todos/1</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="用户定义的变量">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="name" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">${name}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">name</stringProp>
-              </elementProp>
-              <elementProp name="num" elementType="HTTPArgument">
-                <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">${num}</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-                <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">num</stringProp>
-              </elementProp>
-            </collectionProp>
+            <collectionProp name="Arguments.arguments"/>
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="固定定时器">
-            <stringProp name="ConstantTimer.delay">10</stringProp>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
+            <stringProp name="ConstantTimer.delay">1000</stringProp>
           </ConstantTimer>
           <hashTree/>
         </hashTree>
-        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="include 控制器">
+        <IncludeController guiclass="IncludeControllerGui" testclass="IncludeController" testname="sample_module">
           <stringProp name="IncludeController.includepath">sample_module.jmx</stringProp>
         </IncludeController>
         <hashTree/>
-        <BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="InfluxDb  监听器">
+        <BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="InfluxDb Listener">
           <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments">
             <collectionProp name="Arguments.arguments">
               <elementProp name="influxdbMetricsSender" elementType="Argument">
@@ -139,7 +111,7 @@
               </elementProp>
               <elementProp name="influxdbUrl" elementType="Argument">
                 <stringProp name="Argument.name">influxdbUrl</stringProp>
-                <stringProp name="Argument.value">http://host_to_change:8086/write?db=jmeter</stringProp>
+                <stringProp name="Argument.value">http://influxdb:8086/write?db=jmeter</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="application" elementType="Argument">
@@ -154,7 +126,7 @@
               </elementProp>
               <elementProp name="summaryOnly" elementType="Argument">
                 <stringProp name="Argument.name">summaryOnly</stringProp>
-                <stringProp name="Argument.value">true</stringProp>
+                <stringProp name="Argument.value">false</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
               <elementProp name="samplersRegex" elementType="Argument">
@@ -182,54 +154,17 @@
           <stringProp name="classname">org.apache.jmeter.visualizers.backend.influxdb.InfluxdbBackendListenerClient</stringProp>
         </BackendListener>
         <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="查看结果树">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename">result.log</stringProp>
-        </ResultCollector>
-        <hashTree/>
       </hashTree>
-      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV 请求参数">
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config">
         <stringProp name="delimiter">,</stringProp>
         <stringProp name="fileEncoding">UTF-8</stringProp>
-        <stringProp name="filename">Test.csv</stringProp>
-        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="filename">dataset.csv</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
         <boolProp name="quotedData">false</boolProp>
         <boolProp name="recycle">true</boolProp>
         <stringProp name="shareMode">shareMode.all</stringProp>
         <boolProp name="stopThread">false</boolProp>
-        <stringProp name="variableNames">name,num</stringProp>
+        <stringProp name="variableNames">user,password</stringProp>
       </CSVDataSet>
       <hashTree/>
     </hashTree>
