@@ -85,7 +85,10 @@ if [[ -z "${SLAVE}" ]]; then
         echo "调试getent hosts 命令获取ip 地址异常~~~~~"
         for HOST in "${HOST_LIST[@]}"; do
             echo "Looking up IP for host: $HOST"
-            IP=$(getent hosts "${HOST}" | awk -F" " '{print $1}')
+            # 修复 getent 命令获取 容器ip 地址 异常，ip 地址后面跟的不是容器的名称 是自动生成的 容器ID 所以用下面的命令无法获取到
+            #IP=$(getent hosts "${HOST}" | awk -F" " '{print $1}')
+            # 修复的命令:
+            IP=$(getent hosts | tail -n 1 | awk -F " " '{print $1}')
             if [ -z "$IP" ]; then
                 echo "Failed to resolve IP for $HOST"
             else
