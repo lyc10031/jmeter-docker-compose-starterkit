@@ -81,7 +81,8 @@ if [[ -z "${SLAVE}" ]]; then
         echo "调试getent hosts 命令获取ip 地址异常~~~~~"
         for HOST in "${HOST_LIST[@]}"; do
 
-            echo "Resolving $HOST ..."
+            echo -e "Resolving [ $HOST ] ... \n print "$HOST" gentent hosts result"
+            echo "$(getent hosts)"
             HOST_IP_LIST+=( "$(getent hosts "$HOST" | awk -F" " '{print $1}')" )
             echo "Resolved IP: ${HOST_IP_LIST[-1]}"
             # HOST_IP_LIST+=( "$(getent hosts "${HOST}" | awk -F" " '{print $1}')" )
