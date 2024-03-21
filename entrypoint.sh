@@ -78,25 +78,32 @@ if [[ -z "${SLAVE}" ]]; then
         echo "Injector hostname list : ${HOST_LIST[@]}"
 
         # Building IP list of slaves
-        # for HOST in "${HOST_LIST[@]}"; do
-        #     HOST_IP_LIST+=( "$(getent hosts "${HOST}" | awk -F" " '{print $1}')" )
-        # done
-
         echo "调试getent hosts 命令获取ip 地址异常~~~~~"
         for HOST in "${HOST_LIST[@]}"; do
-            echo "Looking up IP for host: $HOST"
-            # 修复 getent 命令获取 容器ip 地址 异常，ip 地址后面跟的不是容器的名称 是自动生成的 容器ID 所以用下面的命令无法获取到
-            #IP=$(getent hosts "${HOST}" | awk -F" " '{print $1}')
-            # 修复的命令:
-            IP=$(getent hosts | tail -n 1 | awk -F " " '{print $1}')
-            if [ -z "$IP" ]; then
-                echo "Failed to resolve IP for $HOST"
-            else
-                HOST_IP_LIST+=("$IP")
-                echo "Resolved IP: $IP"
-            fi
+
+            echo "Resolving $HOST ..."
+            HOST_IP_LIST+=( "$(getent hosts "$HOST" | awk -F" " '{print $1}')" )
+            echo "Resolved IP: ${HOST_IP_LIST[-1]}"
+            # HOST_IP_LIST+=( "$(getent hosts "${HOST}" | awk -F" " '{print $1}')" )
         done
         echo "调试getent hosts 命令获取ip 地址异常~~~~~ 结束"
+
+
+        # echo "调试getent hosts 命令获取ip 地址异常~~~~~"
+        # for HOST in "${HOST_LIST[@]}"; do
+        #     echo "Looking up IP for host: $HOST"
+        #     # 修复 getent 命令获取 容器ip 地址 异常，ip 地址后面跟的不是容器的名称 是自动生成的 容器ID 所以用下面的命令无法获取到
+        #     #IP=$(getent hosts "${HOST}" | awk -F" " '{print $1}')
+        #     # 修复的命令:
+        #     IP=$(getent hosts | tail -n 1 | awk -F " " '{print $1}')
+        #     if [ -z "$IP" ]; then
+        #         echo "Failed to resolve IP for $HOST"
+        #     else
+        #         HOST_IP_LIST+=("$IP")
+        #         echo "Resolved IP: $IP"
+        #     fi
+        # done
+        # echo "调试getent hosts 命令获取ip 地址异常~~~~~ 结束"
 
         echo "Injectors IP list : ${HOST_IP_LIST[@]}"
 fi
