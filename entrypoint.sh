@@ -51,7 +51,7 @@ PARAM_USERS_ARGS="-Gthreads=${threads} -Gduration=${duration} -Grampup=${rampup}
 echo "server.rmi.ssl.disable=true" >> ${JMETER_HOME}/bin/jmeter.properties
 
 # JVM args
-JVM_ARGS="$JVM_ARGS -Duser.timezone=CET"
+JVM_ARGS="$JVM_ARGS -Duser.timezone=UTC+8"
 JVM_ARGS="$JVM_ARGS -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv6Addresses=false"
 JVM_ARGS="$JVM_ARGS -Dcom.sun.management.jmxremote.authenticate=false"
 JVM_ARGS="$JVM_ARGS -Dcom.sun.management.jmxremote.ssl=false"
@@ -78,9 +78,22 @@ if [[ -z "${SLAVE}" ]]; then
         echo "Injector hostname list : ${HOST_LIST[@]}"
 
         # Building IP list of slaves
+        # for HOST in "${HOST_LIST[@]}"; do
+        #     HOST_IP_LIST+=( "$(getent hosts "${HOST}" | awk -F" " '{print $1}')" )
+        # done
+
+        echo "调试getent hosts 命令获取ip 地址异常~~~~~"
         for HOST in "${HOST_LIST[@]}"; do
-            HOST_IP_LIST+=( "$(getent hosts "${HOST}" | awk -F" " '{print $1}')" )
+            echo "Looking up IP for host: $HOST"
+            IP=$(getent hosts "${HOST}" | awk -F" " '{print $1}')
+            if [ -z "$IP" ]; then
+                echo "Failed to resolve IP for $HOST"
+            else
+                HOST_IP_LIST+=("$IP")
+                echo "Resolved IP: $IP"
+            fi
         done
+        echo "调试getent hosts 命令获取ip 地址异常~~~~~ 结束"
 
         echo "Injectors IP list : ${HOST_IP_LIST[@]}"
 fi
